@@ -42,7 +42,14 @@ then
     repo=production
 fi
 
-echo -e  "Install: ${WPE_INSTALL_PROD} or ${WPE_INSTALL}"
+# Make possible feature WP Engine sites based on branch name
+if [[ "$CI_BRANCH" != "develop" && "$CI_BRANCH" != "staging" && "$CI_BRANCH" != "master" ]]
+then
+    target_wpe_install=${CI_BRANCH}
+    repo=production
+fi
+
+echo -e  "Install: ${WPE_INSTALL_PROD} or ${WPE_INSTALL} or ${CI_BRANCH}"
 echo -e  "Repo: ${repo}"
 
 # Begin from the ~/clone directory
